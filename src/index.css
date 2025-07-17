@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: 37, 99, 235;
+  --secondary-color: 59, 130, 246;
+  --accent-color: 124, 58, 237;
+  --background-color: 10, 10, 10;
+  --card-bg-color: 17, 17, 17;
+  --border-color: 51, 51, 51;
+  --text-primary: 255, 255, 255;
+  --text-secondary: 229, 229, 229;
+  --text-muted: 163, 163, 163;
+}
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    @apply scroll-smooth;
+  }
+  
+  body {
+    @apply bg-[#0a0a0a] text-white antialiased selection:bg-blue-500/20 selection:text-blue-200;
+  }
+  
+  /* Container utility */
+  .container {
+    @apply mx-auto max-w-7xl;
+  }
+}
+
+@layer components {
+  /* Button Styles */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 font-medium transition-all focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:ring-offset-2 focus:ring-offset-gray-900 disabled:opacity-70 disabled:cursor-not-allowed;
+  }
+  
+  .btn-primary {
+    @apply bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg shadow-blue-600/20 hover:shadow-blue-600/30 hover:from-blue-500 hover:to-blue-600;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-800/80 backdrop-blur-sm text-white border border-gray-700 hover:bg-gray-700/70;
+  }
+  
+  .btn-lg {
+    @apply px-8 py-4 rounded-xl text-base;
+  }
+  
+  /* Card Styles */
+  .card {
+    @apply rounded-2xl bg-gray-800/30 border border-gray-700/50 backdrop-blur-md p-6 shadow-xl;
+  }
+  
+  /* Input Styles */
+  .input {
+    @apply block w-full rounded-xl bg-gray-800/50 border border-gray-700 focus:border-blue-500 px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/40 backdrop-blur-sm transition-all;
+  }
+  
+  /* Feature Card Styling */
+  .feature-card {
+    @apply relative p-8 rounded-2xl bg-gray-800/30 border border-gray-700/50 backdrop-blur-sm transition-all duration-300 hover:bg-gray-800/50 hover:border-gray-600/50 hover:shadow-xl hover:shadow-blue-500/5 hover:-translate-y-1;
+  }
+  
+  .feature-icon {
+    @apply mb-6 inline-flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500/80 to-purple-600/80 shadow-lg shadow-blue-500/20;
+  }
+  
+  /* Navbar Styles */
+  .nav-link {
+    @apply px-4 py-2 text-gray-300 hover:text-white transition-colors rounded-lg hover:bg-gray-800/50;
+  }
+  
+  .mobile-nav-link {
+    @apply block py-3 px-3 text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-lg transition-colors;
+  }
+  
+  /* Text Gradient */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600;
+  }
+  
+  /* Sidebar Link */
+  .sidebar-link {
+    @apply flex items-center gap-3 px-3 py-2 text-gray-300 hover:text-white rounded-lg transition-colors hover:bg-gray-800/50;
+  }
+  
+  .sidebar-link.active {
+    @apply bg-blue-500/10 text-blue-400 hover:bg-blue-500/20;
+  }
+}
+
+/* Animation Keyframes */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Custom Animation Classes */
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 6s ease-in-out infinite;
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(55 65 81) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgb(55 65 81);
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgb(75 85 99);
+  background-clip: content-box;
+}
+
+/* Code highlighting styles */
+.prose code {
+  @apply bg-gray-700 text-gray-100 px-1 py-0.5 rounded text-sm;
+}
+
+.prose pre {
+  @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto;
+}
+
+.prose pre code {
+  @apply bg-transparent p-0;
+}
+
+/* Markdown table styling */
+.prose table {
+  @apply border-collapse border border-gray-600;
+}
+
+.prose th {
+  @apply border border-gray-600 px-3 py-2 bg-gray-800 font-medium;
+}
+
+.prose td {
+  @apply border border-gray-600 px-3 py-2;
+}
+
+/* Image styling in markdown */
+.prose img {
+  @apply rounded-lg border border-gray-700 max-w-full h-auto;
+}
+
+/* Link styling */
+.prose a {
+  @apply text-blue-400 hover:text-blue-300 no-underline hover:underline;
+}
+
+/* Blockquote styling */
+.prose blockquote {
+  @apply border-l-4 border-gray-600 pl-4 italic text-gray-300 bg-gray-800/30 py-2 rounded-r;
+}
