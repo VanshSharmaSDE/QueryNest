@@ -205,7 +205,8 @@ const Chat = () => {
           "New Chat";
         chat = await chatService.createChat(user.$id, title, selectedDataset);
         setCurrentChat(chat);
-        navigate(`/chat/${chat.$id}`, { replace: true });
+        // Remove automatic navigation - only navigate when user explicitly selects chats
+        // navigate(`/chat/${chat.$id}`, { replace: true });
       } else if (chatTitle && chat.title !== chatTitle) {
         // Update chat title if provided
         await chatService.updateChat(chat.$id, { title: chatTitle });
@@ -243,7 +244,8 @@ const Chat = () => {
           const title = userInput.substring(0, 50) + "...";
           chat = await chatService.createChat(user.$id, title, selectedDataset);
           setCurrentChat(chat);
-          navigate(`/chat/${chat.$id}`, { replace: true });
+          // Don't navigate immediately - let the message flow complete first
+          // navigate(`/chat/${chat.$id}`, { replace: true });
         }
       }
 
@@ -329,6 +331,9 @@ const Chat = () => {
         selectedDatasetContent
       );
 
+      // Set isLoading to false now that we have the response and are starting to stream
+      setIsLoading(false);
+
       // Stream the response word by word
       let fullResponse = "";
       if (response && typeof response === "string") {
@@ -376,7 +381,10 @@ const Chat = () => {
           )
         );
 
-        await loadRecentChats(); // Refresh chat list
+        await loadRecentChats(); // Refresh chat list to include the new chat
+        
+        // Do NOT navigate automatically - let user stay on current URL
+        // Navigation should only happen when user explicitly selects a chat
       } else {
         // In temporary mode, just update the temp message with final content
         setMessages((prev) =>
@@ -392,6 +400,7 @@ const Chat = () => {
           )
         );
       }
+
     } catch (error) {
       console.error("Error sending message:", error);
       toast.error("Failed to send message. Please try again.");
@@ -400,7 +409,6 @@ const Chat = () => {
       setMessages((prev) => prev.filter((msg) => !msg.id.startsWith("temp-")));
 
       setIsStreaming(false);
-    } finally {
       setIsLoading(false);
     }
   };
@@ -679,9 +687,7 @@ const Chat = () => {
                   className="flex items-center space-x-2 bg-gray-800 hover:bg-gray-700 px-3 py-2 rounded-lg transition-colors"
                 >
                   <h1 className="text-xl font-semibold">
-                    {currentChat?.title ||
-                      formatChatTitle(currentChat) ||
-                      "New Chat"}
+                    {currentChat?.title || "New Chat"}
                   </h1>
                   {chats.length > 0 && (
                     <ChevronDown
